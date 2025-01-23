@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Board } from './boards.entity';
 import { BoardStatus } from './boards-status.enum';
-import { CreateBoardDTO } from './dto/create-board.dto';
+import { CreateBoardDto } from './dto/create-board.dto';
+import { UpdateBoardDto } from './dto/update-board.dto';
 
 @Injectable()
 export class BoardsService {
@@ -24,7 +25,7 @@ export class BoardsService {
     }
 
     // 게시글 작성 기능
-    createBoard(createBoardDTO: CreateBoardDTO) {
+    createBoard(createBoardDTO: CreateBoardDto) {
         const {author, title, contents} = createBoardDTO;
         
         const board: Board = {
@@ -36,6 +37,17 @@ export class BoardsService {
         }
         const savedBoard = this.boards.push(board);
         return savedBoard;
+    }
+
+    // 특정 번호의 게시글 수정
+    updateBoardById(id: number, updateBoardDto: UpdateBoardDto): Board {
+        const foundBoard = this.getBoardDetailById(id);
+        const {title, contents} = updateBoardDto;
+
+        foundBoard.title = title;
+        foundBoard.contents = contents;
+
+        return foundBoard
     }
 
     // 특정 번호의 게시글 일부 수정

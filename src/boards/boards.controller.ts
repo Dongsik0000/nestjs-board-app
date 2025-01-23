@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './boards.entity';
 import { CreateBoardDTO } from './dto/create-board.dto';
@@ -16,9 +16,14 @@ export class BoardsController {
 
     // 특정 게시글 조회 기능
     @Get('/:id')
-    getBoardDetailByID(
-        @Param('id') id: number): Board {
+    getBoardDetailByID(@Param('id') id: number): Board {
         return this.boardsService.getBoardDetailById(id);
+    }
+
+    // 키워드(작성자)로 검색한 게시글 조회 기능
+    @Get('/search/:keyword')
+    getBoardByKeyword(@Query('author')author: string): Board[] {
+        return this.boardsService.getBoardByKeyword(author);
     }
 
     // 게시글 작성 기능

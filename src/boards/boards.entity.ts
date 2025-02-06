@@ -1,4 +1,4 @@
-import { BoardStatus } from "./boards-status.enum";
+import { BoardStatus } from './boards-status.enum';
 
 export class Board {
     id: number;
@@ -6,4 +6,5 @@ export class Board {
     title: string;
     contents: string;
     status: BoardStatus;
+    // password: string;
 }
